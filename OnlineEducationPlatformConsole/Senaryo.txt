@@ -1,0 +1,33 @@
+﻿
+
+Senaryo: Online Eğitim Platformu
+
+Bir online eğitim platformu için veritabanı tasarlamalısınız. Bu platform, öğrencilere çeşitli konularda kurslar sunan, eğitmenlerin içerik ekleyebildiği ve öğrencilerin kurslara kaydolabildiği bir sistemdir. Veritabanınız şu temel özellikleri içermelidir:
+
+Kullanıcılar:
+
+Öğrenciler ve eğitmenler için ayrı ayrı kullanıcı tabloları bulunmalıdır.
+Her kullanıcı için temel bilgiler (ad, soyad, e-posta, şifre) saklanmalıdır.
+Eğitmenlerin ayrıca uzmanlık alanları gibi ek bilgileri saklamak için ek alanlar bulunmalıdır.
+
+Kurslar:
+
+Kurslar için bir tablo olmalıdır.
+Kurslar kategorilere ayrılabilir ve her kategoriye ait bir tablo bulunmalıdır.
+Kursların temel bilgileri (başlık, açıklama, süre) saklanmalıdır.
+Her kursun bir eğitmeni olmalı ve eğitmenle kurs arasında bir ilişki bulunmalıdır.
+
+Kurs İncelemeleri:
+
+Öğrencilerin kursları değerlendirebilmeleri için bir inceleme sistemi olmalıdır.
+İncelemeler, kurslarla ilişkilendirilmelidir ve her bir inceleme öğrenci, kurs ve derecelendirme bilgilerini içermelidir.
+
+Kullanıcı Kurs İlişkisi:
+
+Öğrencilerin hangi kurslara kaydolduğunu takip etmek için bir tablo olmalıdır.
+Bu tablo, öğrenci ve kurs arasında birçoktan çok ilişki içermelidir, çünkü bir öğrenci birden fazla kursa kaydolabilir ve bir kursa birden fazla öğrenci kaydolabilir.
+
+Sistem Günlükleri:
+
+Sistemdeki önemli olayları takip etmek için bir günlük tablosu olmalıdır. Örneğin, kullanıcı girişleri, yeni kurs ekleme işlemleri gibi.
+Günlükler, olay türü, tarih ve ayrıntılar gibi bilgileri içermelidir.
