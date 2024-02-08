@@ -2,57 +2,8 @@
 
 OnlineEducationDbContext context = new();
 
-//List<Student> students = new List<Student>()
-//{
-//    new Student()
-//    {
-//        Name = "Dincer",
-//        Surname = "Yigit",
-//        StudentId = 1258,
-//        Email = "dincer@dincer.com",
-//    },
-//    new Student()
-//    {
-//        Name = "Gamze",
-//        Surname = "Yigit",
-//        StudentId = 3096,
-//        Email = "Gamze@Gamze.com",
-//    },
-//    new Student()
-//    {
-//        Name = "Dilara",
-//        Surname = "Yigit",
-//        StudentId = 4536,
-//        Email = "Dilara@Dilara.com",
-//    }
-//};
 
-//List<Teacher> teachers = new List<Teacher>()
-//{
-//    new Teacher()
-//    {
-//        Name = "Kemal",
-//        Surname = "Lale",
-//        Email = "Kemal@Kemal.com",
-//        Profession = "Fen",
-//    },
-//    new Teacher()
-//    {
-//        Name = "Kazım",
-//        Surname = "Kocak",
-//        Email = "Kazım@Kazım.com",
-//        Profession = "Turkce"
-//    },
-//    new Teacher()
-//    {
-//        Name = "Ayşe",
-//        Surname = "Sönmez",
-//        Email = "Ayşe@Ayşe.com",
-//        Profession = "Matematik"
-//    },
-//};
-
-
+var students = await context.Students.Include(s => s.Courses).Include(s => s.Teachers).ToListAsync();
 
 
 await context.SaveChangesAsync();
@@ -75,7 +26,7 @@ public class Student
     public string Surname { get; set; }
     public int StudentId { get; set; }
     public string Email { get; set; }
-    public ICollection<Course> Courses { get; set; }
+    public ICollection<StudentCourse> Courses { get; set; }
     public ICollection<CourseReview> CourseReviews { get; set; }
     public ICollection<Teacher> Teachers { get; set; }
 }
@@ -93,6 +44,14 @@ public class Teacher
 }
 
 
+public class StudentCourse
+{
+    public int StudentsId { get; set; }
+    public int CoursesId { get; set; }
+    public Student Student { get; set; }
+    public Course Course { get; set; }
+}
+
 public class Course
 {
     public int Id { get; set; }
@@ -100,9 +59,10 @@ public class Course
     public int TeacherId { get; set; }
     public string Title { get; set; }
     public string Statement { get; set; }
-    public ICollection<Student> Students { get; set; }
+    public ICollection<StudentCourse> Students { get; set; }
     public CourseCategory CourseCategory { get; set; }
     public Teacher Teacher { get; set; }
+    public ICollection<CourseReview> CourseReviews { get; set; }
 }
 
 public class CourseCategory
@@ -116,8 +76,10 @@ public class CourseReview
 {
     public int Id { get; set; }
     public int StudentId { get; set; }
+    public int CourseId { get; set; }
     public string Comment { get; set; }
     public Student Student { get; set; }
+    public Course Course { get; set; }
 }
 
 
@@ -144,9 +106,23 @@ public class OnlineEducationDbContext : DbContext
             .HasMany(s => s.Teachers)
             .WithMany(t => t.Students);
 
+        //modelBuilder.Entity<Student>()
+        //    .HasMany(s => s.Courses)
+        //    .WithMany(t => t.Students);
+
+        //Default yaklaşımı burda iptal ettik ve kendimiz kurmaya çalıştık
+        modelBuilder.Entity<StudentCourse>().HasKey(sc => new { sc.StudentsId, sc.CoursesId });
+
+        modelBuilder.Entity<Course>()
+            .HasMany(c => c.Students)
+            .WithOne(sc => sc.Course)
+            .HasForeignKey(sc => sc.CoursesId);
+
         modelBuilder.Entity<Student>()
             .HasMany(s => s.Courses)
-            .WithMany(t => t.Students);
+            .WithOne(sc => sc.Student)
+            .HasForeignKey(sc => sc.StudentsId);
+
 
         modelBuilder.Entity<Student>()
             .HasMany(s => s.CourseReviews)
@@ -163,6 +139,11 @@ public class OnlineEducationDbContext : DbContext
             .HasMany(t => t.Courses)
             .WithOne(c => c.Teacher)
             .HasForeignKey(c => c.TeacherId);
+
+        modelBuilder.Entity<Course>()
+            .HasMany(c => c.CourseReviews)
+            .WithOne(c => c.Course)
+            .HasForeignKey(cr => cr.CourseId);
 
 
     }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace OnlineEducationPlatformConsole.Migrations
 {
     [DbContext(typeof(OnlineEducationDbContext))]
-    [Migration("20240207170501_mig_3")]
-    partial class mig3
+    [Migration("20240208093327_mig_1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,29 +83,19 @@ namespace OnlineEducationPlatformConsole.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("StudentId");
 
                     b.ToTable("CourseReviews");
-                });
-
-            modelBuilder.Entity("CourseStudent", b =>
-                {
-                    b.Property<int>("CoursesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CoursesId", "StudentsId");
-
-                    b.HasIndex("StudentsId");
-
-                    b.ToTable("CourseStudent");
                 });
 
             modelBuilder.Entity("Student", b =>
@@ -134,6 +124,21 @@ namespace OnlineEducationPlatformConsole.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("StudentCourse", b =>
+                {
+                    b.Property<int>("StudentsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CoursesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentsId", "CoursesId");
+
+                    b.HasIndex("CoursesId");
+
+                    b.ToTable("StudentCourse");
                 });
 
             modelBuilder.Entity("StudentTeacher", b =>
@@ -201,28 +206,40 @@ namespace OnlineEducationPlatformConsole.Migrations
 
             modelBuilder.Entity("CourseReview", b =>
                 {
+                    b.HasOne("Course", "Course")
+                        .WithMany("CourseReviews")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Student", "Student")
                         .WithMany("CourseReviews")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Course");
+
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("CourseStudent", b =>
+            modelBuilder.Entity("StudentCourse", b =>
                 {
-                    b.HasOne("Course", null)
-                        .WithMany()
+                    b.HasOne("Course", "Course")
+                        .WithMany("Students")
                         .HasForeignKey("CoursesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Student", null)
-                        .WithMany()
+                    b.HasOne("Student", "Student")
+                        .WithMany("Courses")
                         .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("StudentTeacher", b =>
@@ -240,6 +257,13 @@ namespace OnlineEducationPlatformConsole.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Course", b =>
+                {
+                    b.Navigation("CourseReviews");
+
+                    b.Navigation("Students");
+                });
+
             modelBuilder.Entity("CourseCategory", b =>
                 {
                     b.Navigation("Courses");
@@ -248,6 +272,8 @@ namespace OnlineEducationPlatformConsole.Migrations
             modelBuilder.Entity("Student", b =>
                 {
                     b.Navigation("CourseReviews");
+
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("Teacher", b =>
