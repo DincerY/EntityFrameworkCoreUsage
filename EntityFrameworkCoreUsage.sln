@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineEducationPlatform", "OnlineEducationPlatform\OnlineEducationPlatform.csproj", "{CE8E2B7D-1182-4FF9-AC5B-174EED0AEC95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineEducationPlatform", "OnlineEducationPlatform\OnlineEducationPlatform.csproj", "{CE8E2B7D-1182-4FF9-AC5B-174EED0AEC95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineEducationPlatformConsole", "OnlineEducationPlatformConsole\OnlineEducationPlatformConsole.csproj", "{744A91C8-E76D-4972-927F-99E8791A1A36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineEducationPlatformConsole", "OnlineEducationPlatformConsole\OnlineEducationPlatformConsole.csproj", "{744A91C8-E76D-4972-927F-99E8791A1A36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBookingPlatformConsole", "HotelBookingPlatform\HotelBookingPlatformConsole.csproj", "{48FB7B73-8CD5-45BA-BC4A-5C266A4DA361}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{744A91C8-E76D-4972-927F-99E8791A1A36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{744A91C8-E76D-4972-927F-99E8791A1A36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{744A91C8-E76D-4972-927F-99E8791A1A36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48FB7B73-8CD5-45BA-BC4A-5C266A4DA361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48FB7B73-8CD5-45BA-BC4A-5C266A4DA361}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48FB7B73-8CD5-45BA-BC4A-5C266A4DA361}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48FB7B73-8CD5-45BA-BC4A-5C266A4DA361}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
 using OnlineEducationPlatform.Repository;
+using OnlineEducationPlatform.Repository.CourseRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<OnlineEducationDbContext>();
+builder.Services.AddScoped<ITeacherRepository,TeacherRepository>();
+builder.Services.AddScoped<ICourseRepository,CourseRepository>();
 
 
 var app = builder.Build();
